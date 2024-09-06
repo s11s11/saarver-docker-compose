@@ -224,8 +224,6 @@ services:
 
     working_dir: "/"
 
-version: "3.6"
-
 volumes:
   plex_config:
     external: true
