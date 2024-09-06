@@ -1,50 +1,5 @@
 services:
 
-  nginx:
-
-    command:
-      - "nginx"
-      - "-g"
-      - "daemon off;"
-
-    container_name: "nginx"
-
-    entrypoint:
-      - "/docker-entrypoint.sh"
-
-    environment:
-      - "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-      - "NGINX_VERSION=1.27.0"
-      - "NJS_VERSION=0.8.4"
-      - "NJS_RELEASE=2~bookworm"
-      - "PKG_RELEASE=2~bookworm"
-
-    extra_hosts:
-      - "saarver:192.168.50.61"
-
-    hostname: "3dc198b38d1a"
-
-    image: "nginx:latest"
-
-    ipc: "private"
-
-    labels:
-      maintainer: "NGINX Docker Maintainers <docker-maint@nginx.com>"
-
-    logging:
-      driver: "json-file"
-      options: {}
-
-    network_mode: "bridge"
-
-    ports:
-      - "443:443/tcp"
-
-    volumes:
-      - "/etc/nginx/conf.d:/etc/nginx/conf.d"
-      - "/etc/nginx/ssl:/etc/nginx/ssl"
-      - "/var/log/nginx:/var/log/nginx"
-
   plex:
 
     container_name: "plex"
