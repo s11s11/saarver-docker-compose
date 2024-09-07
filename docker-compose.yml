@@ -1,3 +1,7 @@
+networks:
+  traefik_network:
+    driver: bridge
+
 services:
 
   plex:
@@ -49,25 +53,6 @@ services:
 
     ipc: "private"
 
-    labels:
-      build_version: "Linuxserver.io version:- 1.32.2.7100-248a2daf0-ls168 Build-date:- 2023-05-22T17:27:16+00:00"
-      maintainer: "thelamer"
-      org.opencontainers.image.authors: "linuxserver.io"
-      org.opencontainers.image.created: "2023-05-22T17:27:16+00:00"
-      org.opencontainers.image.description: "[Plex](https://plex.tv) organizes video, music and photos\
-        \ from personal media libraries and streams them to smart TVs, streaming boxes and mobile devices.\
-        \ This container is packaged as a standalone Plex Media Server. has always been a top priority.\
-        \ Straightforward design and bulk actions mean getting things done faster."
-      org.opencontainers.image.documentation: "https://docs.linuxserver.io/images/docker-plex"
-      org.opencontainers.image.licenses: "GPL-3.0-only"
-      org.opencontainers.image.ref.name: "c6a5e5c350de87a661d5abcd50c5330b59530e69"
-      org.opencontainers.image.revision: "c6a5e5c350de87a661d5abcd50c5330b59530e69"
-      org.opencontainers.image.source: "https://github.com/linuxserver/docker-plex"
-      org.opencontainers.image.title: "Plex"
-      org.opencontainers.image.url: "https://github.com/linuxserver/docker-plex/packages"
-      org.opencontainers.image.vendor: "linuxserver.io"
-      org.opencontainers.image.version: "1.32.2.7100-248a2daf0-ls168"
-
     logging:
       driver: "json-file"
       options: {}
@@ -99,47 +84,6 @@ services:
     image: "portainer/portainer-ce:latest"
 
     ipc: "private"
-
-    labels:
-      com.docker.desktop.extension.api.version: ">= 0.2.2"
-      com.docker.desktop.extension.icon: "https://portainer-io-assets.sfo2.cdn.digitaloceanspaces.com/logos/portainer.png"
-      com.docker.extension.additional-urls: "[{\"title\":\"Website\",\"url\":\"https://www.portainer.io?utm_campaign=DockerCon&utm_source=DockerDesktop\"\
-        },{\"title\":\"Documentation\",\"url\":\"https://docs.portainer.io\"},{\"title\":\"Support\",\"\
-        url\":\"https://join.slack.com/t/portainer/shared_invite/zt-txh3ljab-52QHTyjCqbe5RibC2lcjKA\"\
-        }]"
-      com.docker.extension.detailed-description: "<p data-renderer-start-pos=\"226\">Portainer&rsquo;s\
-        \ Docker Desktop extension gives you access to all of Portainer&rsquo;s rich management functionality\
-        \ within your docker desktop experience.</p><h2 data-renderer-start-pos=\"374\">With Portainer\
-        \ you can:</h2><ul><li>See all your running containers</li><li>Easily view all of your container\
-        \ logs</li><li>Console into containers</li><li>Easily deploy your code into containers using a\
-        \ simple form</li><li>Turn your YAML into custom templates for easy reuse</li></ul><h2 data-renderer-start-pos=\"\
-        660\">About Portainer&nbsp;</h2><p data-renderer-start-pos=\"680\">Portainer is the worlds&rsquo;\
-        \ most popular universal container management platform with more than 650,000 active monthly users.\
-        \ Portainer can be used to manage Docker Standalone, Kubernetes, Docker Swarm and Nomad environments\
-        \ through a single common interface. It includes a simple GitOps automation engine and a Kube\
-        \ API.&nbsp;</p><p data-renderer-start-pos=\"1006\">Portainer Business Edition is our fully supported\
-        \ commercial grade product for business-wide use. It includes all the functionality that businesses\
-        \ need to manage containers at scale. Visit <a class=\"sc-jKJlTe dPfAtb\" href=\"http://portainer.io/\"\
-        \ title=\"http://Portainer.io\" data-renderer-mark=\"true\">Portainer.io</a> to learn more about\
-        \ Portainer Business and <a class=\"sc-jKJlTe dPfAtb\" href=\"http://portainer.io/take-3?utm_campaign=DockerCon&amp;utm_source=Docker%20Desktop\"\
-        \ title=\"http://portainer.io/take-3?utm_campaign=DockerCon&amp;utm_source=Docker%20Desktop\"\
-        \ data-renderer-mark=\"true\">get 3 free nodes.</a></p>"
-      com.docker.extension.publisher-url: "https://www.portainer.io"
-      com.docker.extension.screenshots: "[{\"alt\": \"screenshot one\", \"url\": \"https://portainer-io-assets.sfo2.digitaloceanspaces.com/screenshots/docker-extension-1.png\"\
-        },{\"alt\": \"screenshot two\", \"url\": \"https://portainer-io-assets.sfo2.digitaloceanspaces.com/screenshots/docker-extension-2.png\"\
-        },{\"alt\": \"screenshot three\", \"url\": \"https://portainer-io-assets.sfo2.digitaloceanspaces.com/screenshots/docker-extension-3.png\"\
-        },{\"alt\": \"screenshot four\", \"url\": \"https://portainer-io-assets.sfo2.digitaloceanspaces.com/screenshots/docker-extension-4.png\"\
-        },{\"alt\": \"screenshot five\", \"url\": \"https://portainer-io-assets.sfo2.digitaloceanspaces.com/screenshots/docker-extension-5.png\"\
-        },{\"alt\": \"screenshot six\", \"url\": \"https://portainer-io-assets.sfo2.digitaloceanspaces.com/screenshots/docker-extension-6.png\"\
-        },{\"alt\": \"screenshot seven\", \"url\": \"https://portainer-io-assets.sfo2.digitaloceanspaces.com/screenshots/docker-extension-7.png\"\
-        },{\"alt\": \"screenshot eight\", \"url\": \"https://portainer-io-assets.sfo2.digitaloceanspaces.com/screenshots/docker-extension-8.png\"\
-        },{\"alt\": \"screenshot nine\", \"url\": \"https://portainer-io-assets.sfo2.digitaloceanspaces.com/screenshots/docker-extension-9.png\"\
-        }]"
-      io.portainer.server: "true"
-      org.opencontainers.image.description: "Docker container management made simple, with the world’s\
-        \ most popular GUI-based container management platform."
-      org.opencontainers.image.title: "Portainer"
-      org.opencontainers.image.vendor: "Portainer.io"
 
     logging:
       driver: "json-file"
@@ -186,29 +130,18 @@ services:
     ipc: "private"
 
     labels:
-      build_version: "Linuxserver.io version:- 4.0.3-r2-ls179 Build-date:- 2023-05-30T16:09:09+00:00"
-      maintainer: "aptalca"
-      org.opencontainers.image.authors: "linuxserver.io"
-      org.opencontainers.image.created: "2023-05-30T16:09:09+00:00"
-      org.opencontainers.image.description: "[Transmission](https://www.transmissionbt.com/) is designed\
-        \ for easy, powerful use. Transmission has the features you want from a BitTorrent client: encryption,\
-        \ a web interface, peer exchange, magnet links, DHT, µTP, UPnP and NAT-PMP port forwarding, webseed\
-        \ support, watch directories, tracker editing, global and per-torrent speed limits, and more."
-      org.opencontainers.image.documentation: "https://docs.linuxserver.io/images/docker-transmission"
-      org.opencontainers.image.licenses: "GPL-3.0-only"
-      org.opencontainers.image.ref.name: "121ec74e4b3d351f7c45247697329ad3368ad0ca"
-      org.opencontainers.image.revision: "121ec74e4b3d351f7c45247697329ad3368ad0ca"
-      org.opencontainers.image.source: "https://github.com/linuxserver/docker-transmission"
-      org.opencontainers.image.title: "Transmission"
-      org.opencontainers.image.url: "https://github.com/linuxserver/docker-transmission/packages"
-      org.opencontainers.image.vendor: "linuxserver.io"
-      org.opencontainers.image.version: "4.0.3-r2-ls179"
+      traefik.enable: "true"
+      traefik.http.routers.transmission.rule: "Host(`transmission.saarkoren.com`)"
+      traefik.http.routers.transmission.entrypoints: "websecure"
+      traefik.http.services.transmission.loadbalancer.server.port: "9091"
+      traefik.http.routers.transmission.tls.certresolver: "myresolver"
 
     logging:
       driver: "json-file"
       options: {}
 
-    network_mode: "bridge"
+    networks:
+      - traefik_network
 
     ports:
       - "51413:51413/tcp"
@@ -223,6 +156,38 @@ services:
       - "transmission_watch:/watch"
 
     working_dir: "/"
+
+  traefik:
+
+    container_name: "traefik"
+
+    image: "traefik:latest"
+
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
+      - "--certificatesresolvers.myresolver.acme.email=saarkoren6@gmail.com"
+      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "./letsencrypt:/letsencrypt"
+      
+    networks:
+      - traefik_network
+
+    labels:
+      - "traefik.http.routers.api.rule=Host(`saarkoren.com`)"
+      - "traefik.http.routers.api.service=api@internal"
+      - "traefik.http.routers.api.entrypoints=websecure"
+      - "traefik.http.routers.api.tls.certresolver=myresolver"
 
 volumes:
   plex_config:
