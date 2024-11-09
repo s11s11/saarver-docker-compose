@@ -1,0 +1,25 @@
+services:
+  freshrss:
+    image: lscr.io/linuxserver/freshrss:latest
+    container_name: freshrss
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Israel
+    volumes:
+      - /home/saar/docker/rss/config:/config
+    ports:
+      - 9090:80
+    restart: unless-stopped
+    labels:
+      traefik.enable: "true"
+      traefik.http.routers.rss.rule: "Host(`rss.saarkoren.com`)"
+      traefik.http.routers.rss.entrypoints: "websecure"
+      traefik.http.services.rss.loadbalancer.server.port: "80"
+      traefik.http.routers.rss.tls.certresolver: "myresolver"
+    networks:
+      traefik_network:
+
+networks:
+  traefik_network:
+    external: true

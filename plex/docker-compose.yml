@@ -1,0 +1,65 @@
+name: plex
+
+services:
+  plex:
+    image: lscr.io/linuxserver/plex:latest
+    container_name: "plex"
+    environment:
+      - "DEBIAN_FRONTEND=noninteractive"
+      - "HOME=/root"
+      - "LANG=en_US.UTF-8"
+      - "LANGUAGE=en_US.UTF-8"
+      - "LSIO_FIRST_PARTY=true"
+      - "NVIDIA_DRIVER_CAPABILITIES=compute,video,utility"
+      - "PATH=/lsiopy/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+      - "PGID=1000"
+      - "PLEX_ARCH=amd64"
+      - "PLEX_DOWNLOAD=https://downloads.plex.tv/plex-media-server-new"
+      - "PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR=/config/Library/Application Support"
+      - "PLEX_MEDIA_SERVER_HOME=/usr/lib/plexmediaserver"
+      - "PLEX_MEDIA_SERVER_INFO_DEVICE=Docker Container (LinuxServer.io)"
+      - "PLEX_MEDIA_SERVER_INFO_VENDOR=Docker"
+      - "PLEX_MEDIA_SERVER_MAX_PLUGIN_PROCS=6"
+      - "PLEX_MEDIA_SERVER_USER=abc"
+      - "PUID=1000"
+      - "S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0"
+      - "S6_STAGE2_HOOK=/docker-mods"
+      - "S6_VERBOSITY=1"
+      - "TERM=xterm"
+      - "VIRTUAL_ENV=/lsiopy"
+
+    expose:
+      - "1900/udp"
+      - "3005/tcp"
+      - "32400/tcp"
+      - "32410/udp"
+      - "32412/udp"
+      - "32413/udp"
+      - "32414/udp"
+      - "32469/tcp"
+      - "5353/udp"
+      - "8324/tcp"
+
+    hostname: "saarver"
+
+    ipc: "private"
+
+    logging:
+      driver: "json-file"
+      options: {}
+
+    network_mode: "host"
+
+    restart: "unless-stopped"
+
+    volumes:
+      - "/home/saar/docker/plex/movies:/movies"
+      - "/home/saar/docker/plex/music:/music"
+      - "/home/saar/docker/plex/tv:/tv"
+      - "plex_config:/config"
+
+    working_dir: "/"
+
+volumes:
+  plex_config:
+    external: true

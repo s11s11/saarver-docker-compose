@@ -1,0 +1,63 @@
+services:
+
+  transmission:
+
+    container_name: "transmission"
+
+    entrypoint:
+      - "/init"
+
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "PATH=/lsiopy/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+      - "PS1=$(whoami)@$(hostname):$(pwd)\\$ "
+      - "HOME=/root"
+      - "TERM=xterm"
+      - "S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0"
+      - "S6_VERBOSITY=1"
+      - "S6_STAGE2_HOOK=/docker-mods"
+      - "VIRTUAL_ENV=/lsiopy"
+      - "LSIO_FIRST_PARTY=true"
+
+    hostname: "8d19153a49ab"
+
+    image: "linuxserver/transmission:latest"
+
+    ipc: "private"
+
+    labels:
+      traefik.enable: "true"
+      traefik.http.routers.transmission.rule: "Host(`transmission.saarkoren.com`)"
+      traefik.http.routers.transmission.entrypoints: "websecure"
+      traefik.http.services.transmission.loadbalancer.server.port: "9091"
+      traefik.http.routers.transmission.tls.certresolver: "myresolver"
+
+    logging:
+      driver: "json-file"
+      options: {}
+
+    networks:
+      - traefik_network
+
+    ports:
+      - "51413:51413/tcp"
+      - "51413:51413/udp"
+      - "9091:9091/tcp"
+
+    restart: "unless-stopped"
+
+    volumes:
+      - "/home/saar/Downloads/transmission:/downloads"
+      - "transmission_config:/config"
+      - "transmission_watch:/watch"
+
+    working_dir: "/"
+volumes:
+  transmission_config:
+    external: true
+  transmission_watch:
+    external: true
+networks:
+  traefik_network:
+    external: true
