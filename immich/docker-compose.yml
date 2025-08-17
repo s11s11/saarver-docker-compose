@@ -23,20 +23,12 @@ services:
       - .env
     ports:
       - 2283:2283
-    labels:
-      traefik.enable: "true"
-      traefik.http.routers.immich.rule: "Host(`immich.saarkoren.com`)"
-      traefik.http.routers.immich.entrypoints: "websecure"
-      traefik.http.services.immich.loadbalancer.server.port: "2283"
-      traefik.http.routers.immich.tls.certresolver: "myresolver"
     depends_on:
       - redis
       - database
     restart: always
     healthcheck:
       disable: false
-    networks:
-      traefik_network:
 
   immich-machine-learning:
     container_name: immich_machine_learning
@@ -53,8 +45,6 @@ services:
     restart: always
     healthcheck:
       disable: false
-    networks:
-      traefik_network:
 
   redis:
     container_name: immich_redis
@@ -62,8 +52,6 @@ services:
     healthcheck:
       test: redis-cli ping || exit 1
     restart: always
-    networks:
-      traefik_network:
 
   database:
     container_name: immich_postgres
@@ -83,12 +71,6 @@ services:
       start_period: 5m
     command: ["postgres", "-c", "shared_preload_libraries=vectors.so", "-c", 'search_path="$$user", public, vectors', "-c", "logging_collector=on", "-c", "max_wal_size=2GB", "-c", "shared_buffers=512MB", "-c", "wal_compression=on"]
     restart: always
-    networks:
-      traefik_network:
-
-networks:
-  traefik_network:
-    external: true
 
 volumes:
   model-cache:

@@ -26,19 +26,9 @@ services:
 
     ipc: "private"
 
-    labels:
-      traefik.enable: "true"
-      traefik.http.routers.transmission.rule: "Host(`transmission.saarkoren.com`)"
-      traefik.http.routers.transmission.entrypoints: "websecure"
-      traefik.http.services.transmission.loadbalancer.server.port: "9091"
-      traefik.http.routers.transmission.tls.certresolver: "myresolver"
-
     logging:
       driver: "json-file"
       options: {}
-
-    networks:
-      - traefik_network
 
     ports:
       - "51413:51413/tcp"
@@ -57,7 +47,4 @@ volumes:
   transmission_config:
     external: true
   transmission_watch:
-    external: true
-networks:
-  traefik_network:
     external: true
