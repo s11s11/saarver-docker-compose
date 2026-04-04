@@ -3,7 +3,7 @@ name: diun
 services:
   diun:
     container_name: diun
-    image: crazymax/diun:latest
+    image: docker.io/crazymax/diun:latest
     command: serve
     volumes:
       - "/home/saar/docker/diun:/data"
@@ -21,9 +21,15 @@ services:
       - "DIUN_NOTIF_MAIL_SSL=false"
       - "DIUN_NOTIF_MAIL_INSECURESKIPVERIFY=false"
       - "DIUN_NOTIF_MAIL_USERNAME=saarkoren6@gmail.com"
-      - "DIUN_NOTIF_MAIL_PASSWORD=REDACTED"
+      - "DIUN_NOTIF_MAIL_PASSWORDFILE=/run/secrets/mail_password"
       - "DIUN_NOTIF_MAIL_FROM=saarkoren6@gmail.com"
       - "DIUN_NOTIF_MAIL_TO=saarkoren6@gmail.com"
     labels:
       - "diun.enable=true"
     restart: always
+    secrets:
+      - mail_password
+
+secrets:
+  mail_password:
+    file: secrets/mail_password
