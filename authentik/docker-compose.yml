@@ -1,0 +1,96 @@
+services:
+  postgresql:
+    image: docker.io/library/postgres:16-alpine
+    container_name: authentik_postgres
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_DB: authentik
+      POSTGRES_USER: authentik
+      POSTGRES_PASSWORD: file:///run/secrets/postgres_password   # 👈 changed
+
+    secrets:
+      - postgres_password
+
+    volumes:
+      - /home/saar/docker/authentik/database:/var/lib/postgresql/data
+
+    healthcheck:
+      interval: 30s
+      retries: 5
+      start_period: 20s
+      timeout: 5s
+      test:
+        - CMD-SHELL
+        - pg_isready -d authentik -U authentik
+
+
+  server:
+    image: ghcr.io/goauthentik/server:2026.2.1
+    container_name: authentik_server
+    command: server
+    restart: unless-stopped
+    shm_size: 512mb
+
+    depends_on:
+      postgresql:
+        condition: service_healthy
+
+    environment:
+      AUTHENTIK_POSTGRESQL__HOST: postgresql
+      AUTHENTIK_POSTGRESQL__NAME: authentik
+      AUTHENTIK_POSTGRESQL__USER: authentik
+
+      AUTHENTIK_POSTGRESQL__PASSWORD: file:///run/secrets/postgres_password   # 👈 changed
+      AUTHENTIK_SECRET_KEY: file:///run/secrets/authentik_secret_key          # 👈 changed
+
+    secrets:
+      - postgres_password
+      - authentik_secret_key
+
+    ports:
+      - "9000:9000"
+      - "9443:9443"
+
+    volumes:
+      - /home/saar/docker/authentik/data:/data
+      - ./custom-templates:/templates
+
+
+  worker:
+    image: ghcr.io/goauthentik/server:2026.2.1
+    container_name: authentik_worker
+    command: worker
+    restart: unless-stopped
+    shm_size: 512mb
+    user: root
+
+    depends_on:
+      postgresql:
+        condition: service_healthy
+
+    environment:
+      AUTHENTIK_POSTGRESQL__HOST: postgresql
+      AUTHENTIK_POSTGRESQL__NAME: authentik
+      AUTHENTIK_POSTGRESQL__USER: authentik
+
+      AUTHENTIK_POSTGRESQL__PASSWORD: file:///run/secrets/postgres_password
+      AUTHENTIK_SECRET_KEY: file:///run/secrets/authentik_secret_key
+
+    secrets:
+      - postgres_password
+      - authentik_secret_key
+
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /home/saar/docker/authentik/data:/data
+      - ./certs:/certs
+      - ./custom-templates:/templates
+
+
+# 👇 secrets defined at root
+secrets:
+  postgres_password:
+    file: secrets/postgres_password
+  authentik_secret_key:
+    file: secrets/authentik_secret_key
