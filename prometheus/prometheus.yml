@@ -1,0 +1,16 @@
+scrape_configs:
+  - job_name: 'nodes'
+    static_configs:
+      - targets:
+          - '10.137.42.1:9100'
+          - '10.137.42.2:9100'
+          - '10.137.42.3:9100'
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+            - "alertmanager:9093"
+
+rule_files:
+  - "alert.rules.yml"

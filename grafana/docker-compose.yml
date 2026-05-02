@@ -1,0 +1,15 @@
+services:
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    volumes:
+      - /home/saar/docker/grafana:/var/lib/grafana
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    networks:
+      - monitoring
+
+networks:
+  monitoring:
+    external: true
