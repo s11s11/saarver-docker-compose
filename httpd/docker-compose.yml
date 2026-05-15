@@ -6,3 +6,4 @@ services:
       - /home/saar/docker/httpd:/usr/local/apache2/htdocs/
     ports:
       - 8080:80
+    restart: unless-stopped
