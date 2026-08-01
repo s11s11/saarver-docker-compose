@@ -7,7 +7,13 @@ services:
       - CONFIG_FILE=/run/secrets/newt-config
     secrets:
       - newt-config
+    networks:
+      - nextcloud-aio
 
 secrets:
   newt-config:
     file: secrets/newt-config.secret
+
+networks:
+  nextcloud-aio:
+    external: true
