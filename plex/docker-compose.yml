@@ -11,10 +11,10 @@ services:
       - TZ=Israel
       - VERSION=docker
     volumes:
-      - "/home/saar/docker/plex/movies:/movies"
-      - "/home/saar/docker/plex/music:/music"
-      - "/home/saar/docker/plex/tv:/tv"
-      - "plex_config:/config"
+      - "/srv/plex/movies:/movies"
+      - "/srv/plex/music:/music"
+      - "/srv/plex/tv:/tv"
+      - "/srv/plex/config:/config"
     restart: "unless-stopped"
 
 volumes:

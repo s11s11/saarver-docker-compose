@@ -11,11 +11,16 @@ services:
       - APACHE_IP_BINDING=0.0.0.0
       - APACHE_ADDITIONAL_NETWORK=
       - SKIP_DOMAIN_VALIDATION=true
-      - NEXTCLOUD_DATADIR=/home/saar/docker/nextcloud-aio/data
+      - NEXTCLOUD_DATADIR=/srv/nextcloud-aio/data
     volumes:
+      # Do not change config volume name
       - nextcloud_aio_mastercontainer:/mnt/docker-aio-config
       - /var/run/docker.sock:/var/run/docker.sock:ro
 
 volumes:
   nextcloud_aio_mastercontainer:
     name: nextcloud_aio_mastercontainer
+
+networks:
+  pangolin_proxy:
+    external: true

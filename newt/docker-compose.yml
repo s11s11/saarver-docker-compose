@@ -17,3 +17,5 @@ secrets:
 networks:
   nextcloud-aio:
     external: true
+  pangolin_proxy:
+    external: true
